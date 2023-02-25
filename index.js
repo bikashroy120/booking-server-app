@@ -10,11 +10,14 @@ const dotenv = require("dotenv").config();
 const PORT = process.env.PORT || 4000
 const authRouters = require("./routers/auth")
 const uploasRouters = require("./routers/upload") 
+const path = require("path")
 
 
 dbConnect()
 app.use(cors())
 app.use(bodyParser.json())
+app.use(express.static(path.join(__dirname,"uploads")))
+app.use('/uploads', express.static(__dirname+'/uploads'));
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(cookieParser())
 app.use(morgan('dev'))
