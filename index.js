@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 4000
 const authRouters = require("./routers/auth")
 const uploasRouters = require("./routers/upload") 
 const path = require("path")
-
+const placeRouters = require("./routers/place")
 
 dbConnect()
 app.use(cors())
@@ -25,6 +25,7 @@ app.use(morgan('dev'))
 
 app.use("/api/user",authRouters)
 app.use("/api/upload",uploasRouters)
+app.use("/api/place",placeRouters)
 
 
 

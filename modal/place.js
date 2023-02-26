@@ -7,6 +7,7 @@ const placeSchema = new mongoose.Schema({
     },
     title:String,
     address:String,
+    city:String,
     photos:[String],
     description:String,
     perks:[String],
@@ -14,6 +15,17 @@ const placeSchema = new mongoose.Schema({
     checkIn:Number,
     checkOut:Number,
     maxGuests:Number,
+    ratings: [
+        {
+          star: Number,
+          comment: String,
+          postedby: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+        },
+      ],
+      totalrating: {
+        type: String,
+        default: 0,
+      },
 })
 
 const PlaceModel = mongoose.model("Place",placeSchema);
