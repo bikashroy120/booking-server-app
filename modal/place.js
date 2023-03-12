@@ -12,6 +12,7 @@ const placeSchema = new mongoose.Schema({
     description:String,
     perks:[String],
     extraInfo:String,
+    price:Number,
     checkIn:Number,
     checkOut:Number,
     maxGuests:Number,
@@ -26,6 +27,8 @@ const placeSchema = new mongoose.Schema({
         type: String,
         default: 0,
       },
+},{
+  timestamps:true
 })
 
 const PlaceModel = mongoose.model("Place",placeSchema);
