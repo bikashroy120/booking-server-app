@@ -3,25 +3,22 @@ const asyncHandler = require("express-async-handler")
 const catchAsync = require("../utilis/catchAsync")
 
 
-const creactPlace = asyncHandler(async(req,res,next)=>{
-     const {
-        title,address,addedPhotos,description,price,
-        perks,extraInfo,checkIn,checkOut,maxGuests,city
-      } = req.body;
-     try {
+const creactPlace = catchAsync(async (req, res, next) => {
 
-        const placeDoc = await Place.create({
-            owner:req.user.id,
-            ...req.body
-          });
+   console.log(req.user)
 
-          res.json(placeDoc)
-        
-     } catch (error) {
-        res.status(500).json("shimthing is wrong")
+   const newTour = await Place.create({
+      owner:req.user.id,
+      ...req.body
+   });
+ 
+   res.status(201).json({
+     status: 'success',
+     data: {
+       tour: newTour
      }
-})
-
+   });
+ });
 
 const getAllPlece = asyncHandler(async(req,res)=>{
 
@@ -119,6 +116,16 @@ const getWonerPlace = asyncHandler(async(req,res)=>{
    }
 })
 
+
+const getSingalPlace = catchAsync(async(req,res,next)=>{
+   const {id} = req.params;
+   const place = await Place.findById(id).populate("reviews");
+   res.json({
+      status:"Success",
+      data:place
+   })
+})
+
 const deletePlace = catchAsync(async(req,res,next)=>{
 
    const {id} = req.body;
@@ -183,4 +190,4 @@ const getMon = asyncHandler(async(req,res)=>{
 
 
 
-module.exports={creactPlace,getAllPlece,getWonerPlace,updatePlace,deletePlace,getAvrgase,getMon}
+module.exports={creactPlace,getAllPlece,getSingalPlace,getWonerPlace,updatePlace,deletePlace,getAvrgase,getMon}
