@@ -1,5 +1,6 @@
 const Place = require("../modal/place");
 const asyncHandler = require("express-async-handler")
+const catchAsync = require("../utilis/catchAsync")
 
 
 const creactPlace = asyncHandler(async(req,res,next)=>{
@@ -10,9 +11,8 @@ const creactPlace = asyncHandler(async(req,res,next)=>{
      try {
 
         const placeDoc = await Place.create({
-            owner:req.user.id,price,
-            title,address,photos:addedPhotos,description,
-            perks,extraInfo,checkIn,checkOut,maxGuests,city
+            owner:req.user.id,
+            ...req.body
           });
 
           res.json(placeDoc)
@@ -87,6 +87,25 @@ const getAllPlece = asyncHandler(async(req,res)=>{
 })
 
 
+const updatePlace = catchAsync(async(req,res,next)=>{
+
+   const tour = await Place.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true
+    });
+  
+    if (!tour) {
+     return res.status(400).json({mes:"somthing is wrong! please try later"});
+    }
+  
+    res.status(200).json({
+      status: 'success',
+      data:tour
+    });
+
+})
+
+
 const getWonerPlace = asyncHandler(async(req,res)=>{
 
    const {id} = req.user;
@@ -98,6 +117,19 @@ const getWonerPlace = asyncHandler(async(req,res)=>{
    } catch (error) {
       res.json(error)
    }
+})
+
+const deletePlace = catchAsync(async(req,res,next)=>{
+
+   const {id} = req.body;
+
+   const deletedata = await Place.findByIdAndDelete(id)
+
+   res.states(204).json({
+      status:"succes",
+      message:"Plase delete successfully!"
+   })
+   
 })
 
 
@@ -151,4 +183,4 @@ const getMon = asyncHandler(async(req,res)=>{
 
 
 
-module.exports={creactPlace,getAllPlece,getWonerPlace,getAvrgase,getMon}
+module.exports={creactPlace,getAllPlece,getWonerPlace,updatePlace,deletePlace,getAvrgase,getMon}
