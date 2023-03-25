@@ -13,6 +13,7 @@ const uploasRouters = require("./routers/upload")
 const path = require("path")
 const placeRouters = require("./routers/place")
 const reviewRouters = require("./routers/review")
+const roomRouters = require("./routers/room")
 
 dbConnect()
 app.use(cors())
@@ -28,6 +29,7 @@ app.use("/api/user",authRouters)
 app.use("/api/upload",uploasRouters)
 app.use("/api/place",placeRouters)
 app.use("/api/review",reviewRouters)
+app.use("/api/rooms",roomRouters)
 
 
 

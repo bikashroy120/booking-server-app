@@ -27,7 +27,10 @@ const placeSchema = new mongoose.Schema({
     checkIn:Number,
     checkOut:Number,
     maxGuests:Number,
-    rooms:[mongoose.Schema.ObjectId]
+    rooms:[{
+      type:mongoose.Schema.ObjectId,
+      ref:"Room"
+    }]
 },{
   timestamps:true
 },
@@ -48,6 +51,8 @@ placeSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'owner',
     select: '-password -refreshToken'
+  }).populate({
+    path: 'rooms',
   });
 
   next();
