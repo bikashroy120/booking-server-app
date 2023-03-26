@@ -68,7 +68,8 @@ const { generateToken } = require("../config/jwtToken");
           _id:user.id,
           username:user.username,
           email:user.email,
-          token:token
+          token:token,
+          rolId:user.rolId
         })
 
     } catch (error) {
@@ -77,8 +78,36 @@ const { generateToken } = require("../config/jwtToken");
 }
 
 
-// handle refresh token
 
+const getProfileData = catchAsync(async(req,res,next)=>{
+  const {id} = req.user;
+
+  const profiledata = await User.findById(id);
+
+  res.status(200).json({
+    status:"success",
+    data:profiledata
+  }) 
+  
+})
+
+
+const updateProfileData = catchAsync(async(req,res,next)=>{
+    const {id} = req.user;
+
+    const updateprofile = await User.findByIdAndUpdate(id,req.body,{
+      new:true,
+      runValidators:true
+    })
+
+    res.status(200).json({
+      status:"success",
+      data:updateprofile
+    }) 
+})
+
+
+// handle refresh token
 const handleRefreshToken = asyncHandler(async (req, res) => {
     const cookie = req.cookies;
     if (!cookie?.refreshToken) throw new Error("No Refresh Token in Cookies");
@@ -234,4 +263,4 @@ const handleRefreshToken = asyncHandler(async (req, res) => {
   })
 
 
-  module.exports={getallUser,regester,login,sentOtp,varyfyOtp,changePassword}
+  module.exports={getallUser,regester,login,getProfileData,updateProfileData,sentOtp,varyfyOtp,changePassword}
