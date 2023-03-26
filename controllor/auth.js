@@ -13,7 +13,6 @@ const { generateToken } = require("../config/jwtToken");
 // REGESTER USER
  const regester = async(req,res)=>{  
     try {
-      console.log(req.body)
         const user = await User.findOne({email:req.body.email})
 
         if(user){
@@ -24,7 +23,8 @@ const { generateToken } = require("../config/jwtToken");
         
         const hassPassword = await bcrypt.hash(req.body.password,salt);
         const newUser = new User({
-            username:req.body.username,
+            firstName:req.body.firstName,
+            lastName:req.body.lastName,
             email:req.body.email,
             password:hassPassword,
         })

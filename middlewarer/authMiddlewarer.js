@@ -33,5 +33,17 @@ const isAdmin = asyncHandler(async (req,res,next)=>{
     }
 })
 
+const isOwner = asyncHandler(async (req,res,next)=>{
+  const {email} = req.user;
+  const adminUser = await User.findOne({email});
 
-module.exports = {authMiddleware,isAdmin};
+  if(adminUser.rolId !== "owner"){
+      throw new Error("You are not an owner")
+  }else{
+      next()
+  }
+})
+
+
+
+module.exports = {authMiddleware,isAdmin,isOwner};

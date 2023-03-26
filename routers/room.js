@@ -1,14 +1,14 @@
 const express = require("express");
 const { creactRoom, updateRoom, getAllRooms, deleteRoom } = require("../controllor/room");
-const { authMiddleware } = require("../middlewarer/authMiddlewarer");
+const { authMiddleware,isOwner } = require("../middlewarer/authMiddlewarer");
 
 const router = express.Router();
 
 
-router.post("/:placeId",authMiddleware,creactRoom)
-router.get("/",authMiddleware,getAllRooms)
-router.patch("/update/:roomId",authMiddleware,updateRoom)
-router.delete("/delete/:id",authMiddleware,deleteRoom)
+router.post("/:placeId",authMiddleware,isOwner,creactRoom)
+router.get("/",authMiddleware,isOwner,getAllRooms)
+router.patch("/update/:roomId",authMiddleware,isOwner,updateRoom)
+router.delete("/delete/:id",authMiddleware,isOwner,deleteRoom)
 
 
 module.exports = router;
