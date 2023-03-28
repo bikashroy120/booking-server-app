@@ -9,6 +9,7 @@ const creactPlace = catchAsync(async (req, res, next) => {
 
    const newTour = await Place.create({
       owner:req.user.id,
+      ownerId:req.user.id,
       ...req.body
    });
  
@@ -103,18 +104,31 @@ const updatePlace = catchAsync(async(req,res,next)=>{
 })
 
 
-const getWonerPlace = asyncHandler(async(req,res)=>{
+// const getWonerPlace = asyncHandler(async(req,res,next)=>{
 
-   const {id} = req.user;
-
-   try {
-      const place = await Place.find({owner:id});
-      res.json(place)
+//    // const {id} = req.user;
+//    // console.log(id)
+//    try {
+//       // const place = await Place.find({ownerId:id});
+//       res.json("hello")
       
-   } catch (error) {
-      res.json(error)
-   }
-})
+//    } catch (error) {
+//       res.json(error)
+//    }
+// })
+
+   const getWonerPlace = catchAsync(async(req,res,next)=>{
+
+      const {id} = req.user;
+
+      const getPlace = await Place.find({ownerId:id}) 
+
+      res.status(200).json({
+        status: 'success',
+        data:getPlace
+      });
+   })
+
 
 
 const getSingalPlace = catchAsync(async(req,res,next)=>{

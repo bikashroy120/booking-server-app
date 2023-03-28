@@ -6,8 +6,8 @@ const router = express.Router();
 
 router.post("/",authMiddleware,isOwner,creactPlace)
 router.get("/",getAllPlece)
+router.get("/owner",authMiddleware,getWonerPlace)
 router.get("/:id",getSingalPlace)
-router.get("/owner",authMiddleware,isOwner,getWonerPlace)
 router.patch("/update/:id",authMiddleware,isOwner,updatePlace)
 router.delete("/delete/id",authMiddleware,isOwner,deletePlace)
 router.get("/avg",getAvrgase)
