@@ -46,12 +46,25 @@ const updateRoom = catchAsync(async(req,res,next)=>{
 })
 
 
+
+
 const getAllRooms = catchAsync(async(req,res,next)=>{
     const rooms = await Room.find()
 
     res.status(200).json({
         status: 'success',
         data:rooms
+      });
+})
+
+const getSingalRoom = catchAsync(async(req,res,next)=>{
+    const {id} = req.params;
+
+    const data  = await Room.findById(id)
+
+    res.status(200).json({
+        status: 'success',
+        data:data
       });
 })
 
@@ -78,4 +91,4 @@ const deleteRoom = catchAsync(async(req,res,next)=>{
 })
 
 
-module.exports = {creactRoom,updateRoom,deleteRoom,getAllRooms}
+module.exports = {creactRoom,updateRoom,deleteRoom,getAllRooms,getSingalRoom}

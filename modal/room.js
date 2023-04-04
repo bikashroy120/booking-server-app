@@ -12,6 +12,7 @@ const roomSchema = new mongoose.Schema({
         type:String,
         required:[true,"title cant not be empty"]
     },
+    description:String,
     maxgest:{
         type:Number,
     },
@@ -22,9 +23,7 @@ const roomSchema = new mongoose.Schema({
     roomNumber:{
         type:Number,
     },
-    image:{
-        type:String
-    },
+    photos:[String],
     bookDates:{
         type:Date
     }
