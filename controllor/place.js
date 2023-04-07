@@ -143,7 +143,6 @@ const getSingalPlace = catchAsync(async(req,res,next)=>{
 const deletePlace = catchAsync(async(req,res,next)=>{
 
    const {id} = req.body;
-
    const deletedata = await Place.findByIdAndDelete(id)
 
    res.states(204).json({
